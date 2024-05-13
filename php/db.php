@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    define("DB_HOST", "PMYSQL175.dns-servicio.com:3306");
+    define("DB_HOST", "PMYSQL175.dns-servicio.com");
     define("DB_NAME", "10430865_taller");
     define("DB_USER", "ivan");
     define("DB_PASSWORD", "0qrMu891#");
