@@ -296,3 +296,37 @@ p a {
     margin-right: 5px;
     padding: 15px;
 }
+
+/* Estilos para dispositivos pequeños */
+@media screen and (max-width: 600px) {
+    header {
+        padding: 30px;
+    }
+
+    nav {
+        font-size: 16px;
+    }
+
+    section {
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+
+    article {
+        flex: 1 1 100%;
+        max-width: 100%;
+        margin: 5px;
+    }
+
+    aside {
+        display: none;
+    }
+
+    .contenedor {
+        margin-top: 160px;
+    }
+
+    footer {
+        padding: 15px;
+    }
+}
