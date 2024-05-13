@@ -1,10 +1,10 @@
 <?php
     session_start();
 
-    define("DB_HOST", "localhost");
-    define("DB_NAME", "taller");
-    define("DB_USER", "root");
-    define("DB_PASSWORD", "");
+    define("DB_HOST", "PMYSQL175.dns-servicio.com:3306");
+    define("DB_NAME", "10430865_taller");
+    define("DB_USER", "ivan");
+    define("DB_PASSWORD", "0qrMu891#");
 
     $action = $_POST['action'];
     $crud = new db();
