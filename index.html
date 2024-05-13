@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOOL-BOX</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-3.7.1.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/toolbox.js"></script>
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+    <header>
+        <div class="titulo">
+            <h1><a href="#index">TOOL BOX</a></h1>
+            <h3>Un nuevo concepto de taller mecánico</h3>
+        </div>
+        <div class="login" id="id_registerLogin">
+            <button id="id_login" class="inicio">Iniciar sesión</button>
+            <button id="id_register" class="inicio">Registrarse</button>
+        </div>
+        <div class="login" id="id_dregister">
+            DNI <input type="text" name="DNI" id="id_DNIRegister" placeholder="DNI"><br>
+            Nombre <input type="text" name="nombre" id="id_nombreRegister" placeholder="Nombre"><br>
+            Password <input type="password" name="password" id="id_passwordRegister" placeholder="Contraseña"><br>
+            <button id="id_bregistro" class="inicio">Registrarse</button>
+        </div>
+        <div class="login" id="id_dlogin">
+            <form action="" id="id_form_login">
+                DNI <input type="text" name="DNI" id="id_DNILogin" placeholder="DNI"><br>
+                Password <input type="password" name="password" id="id_passwordLogin" placeholder="Contraseña"><br>
+                <button id="id_binicio" class="inicio">Iniciar sesión</button>
+            </form>
+        </div>
+        <div id="id_dlogout" class="login">
+            <p id="id_resultado"></p>
+            <button id="id_bcerrar" class="inicio">Cerrar sesión</button>
+        </div>
+    </header>
+    <nav>
+        <a href="#comunicacion">Comunicación</a>
+        <a href="#presupuestos">Presupuestos</a>
+        <a href="#intervenciones">Intervenciones</a>
+        <a href="#citas">Citas</a>
+    </nav>
+    <div class="contenedor">
+        <section>
+            <aside>
+                <p><a href="#comunicacion">Comunicación</a></p>
+                <p><a href="#presupuestos">Presupuestos</a></p>
+                <p><a href="#intervenciones">Intervenciones</a></p>
+                <p><a href="#citas">Citas</a></p>
+
+                <hr>
+                <h4>Información de contacto</h4>
+                <p>Teléfono: </p>
+                <p>Email: </p>
+                <hr>
+                <div id="map"></div>
+                <p class="enlaceMapa">
+                    <img src="img/LogoUbicacion.png" alt="ubicación" class="img_ubicacion">
+                    <a href="https://www.google.com/maps/place/Tool+Box/@40.9265351,-4.1118941,15z/data=!4m15!1m8!3m7!1s0xd413eff9241ed19:0xec3576f306c230b1!2sTool+Box!8m2!3d40.9266783!4d-4.11195!10e5!16s%2Fg%2F1tpbd8mg!3m5!1s0xd413eff9241ed19:0xec3576f306c230b1!8m2!3d40.9266783!4d-4.11195!16s%2Fg%2F1tpbd8mg?entry=ttu">Coordenadas</a>
+                </p>
+            </aside>
+
+            <!-- Contenido de las nuevas vistas -->
+            <div id="index" class="vista">
+                <article>
+                    <h1>Bienvenido a TOOL-BOX</h1>
+                    <p>
+                        Esta es la página principal de TOOL-BOX. Aquí encontrarás información sobre nuestro taller mecánico y las diferentes áreas que cubrimos.
+                    </p>
+                </article>
+            </div>
+            <div id="comunicacion" class="vista" style="display: none;">
+                
+            </div>
+            <div id="presupuestos" class="vista" style="display: none;">
+                <article>
+                    <p>
+                        Lorem Ipsum es simplemente un texto de relleno de la industria de la impresión y la tipografía. 
+                        Lorem Ipsum ha sido el texto de relleno estándar de la industria desde el siglo XVI, cuando un impresor 
+                        desconocido tomó una galería de tipos y los mezcló para hacer un libro de muestras tipográficas. Ha sobrevivido no 
+                        sólo a cinco siglos, sino también al salto hacia la composición tipográfica electrónica, permaneciendo esencialmente 
+                        sin cambios. Se popularizó en la década de 1960 con el lanzamiento de hojas de Letraset que contenían pasajes de 
+                        Lorem Ipsum y, más recientemente, con software de autoedición como Aldus PageMaker, que incluía versiones de Lorem Ipsum.
+                    </p>
+                    <p>
+                        Lorem Ipsum es simplemente un texto de relleno de la industria de la impresión y la tipografía. 
+                        Lorem Ipsum ha sido el texto de relleno estándar de la industria desde el siglo XVI, cuando un impresor 
+                        desconocido tomó una galería de tipos y los mezcló para hacer un libro de muestras tipográficas. Ha sobrevivido no 
+                        sólo a cinco siglos, sino también al salto hacia la composición tipográfica electrónica, permaneciendo esencialmente 
+                        sin cambios. Se popularizó en la década de 1960 con el lanzamiento de hojas de Letraset que contenían pasajes de 
+                        Lorem Ipsum y, más recientemente, con software de autoedición como Aldus PageMaker, que incluía versiones de Lorem Ipsum.
+                    </p>
+                </article>
+            </div>
+            <div id="intervenciones" class="vista" style="display: none;">
+                    <article id="mostrarIntervenciones">
+                        <h1>Información de intervenciones</h1>
+                        <table id="tablaIntervencion">
+                            
+                        </table>
+                    </article>
+        
+                    <article id="mostrarVehiculos">
+                        <h1>Información de Vehículos</h1>
+                        <table id="tablaVehiculos">
+                            
+                        </table>
+                    </article>
+            </div>
+            <div id="citas" class="vista" style="display: none;">
+                <article id="articleCitas">
+                    <h1>Calendario de Citas</h1>
+                    <input type="month" id="fechaCitas">
+                    <div id="calendario"></div>
+                    <div id="detalleDia"></div>
+                </article>
+    
+                <article id="mostrarCitas">
+                    <h1>Información de citas</h1>
+                    <table id="tablaCitas">
+                        
+                    </table>
+                </article>
+            </div>
+        </section>
+    </div>
+    <footer>
+        Desarrollado por Iván Ruiz
+    </footer>
+
+    <script>
+        
+    </script>
+</body>
+</html>
