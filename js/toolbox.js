@@ -368,7 +368,7 @@ function register() {
         async: true,
         data: { action: 'register', DNI: DNI, nombre: nombre, password: password },
         success: function (respuesta) {
-            window.alert('Usuario ' + nombre + ' registrado de form correcta');
+            window.alert('Usuario ' + nombre + ' registrado de forma correcta');
         },
         error: function () {
             window.alert("Se ha producido un error");
