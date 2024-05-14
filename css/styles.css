@@ -320,7 +320,7 @@ p a {
         margin: 0 3%;
     }
 
-    aside {
+    aside, .login {
         display: none;
     }
 
