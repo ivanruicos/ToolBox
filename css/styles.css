@@ -9,6 +9,18 @@ body {
     overflow-x: hidden;
 }
 
+header {
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1b1b1b;
+    color: #fff;
+    padding: 40px;
+    z-index: 1000;
+}
+
 header h1 {
     margin: 0;
     color: rgba(255, 71, 71, 0.9);
@@ -21,18 +33,6 @@ header h3 {
     margin: 0;
     display: inline-block;
     margin-left: 5%;
-}
-
-header {
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #1b1b1b;
-    color: #fff;
-    padding: 40px;
-    z-index: 1000;
 }
 
 nav {
@@ -123,11 +123,6 @@ a {
 .login form input[type='password'],
 .login form button {
     margin-right: 10px;
-}
-
-.login form input[type='text'],
-.login form input[type='password'], 
-.login form button{
     font-size: 13px;
 }
 
@@ -135,11 +130,6 @@ a {
 .login input[type='password'],
 .login button {
     margin-right: 7px;
-}
-
-.login input[type='text'],
-.login input[type='password'], 
-.login button{
     font-size: 13px;
 }
 
@@ -296,7 +286,7 @@ p a {
     padding: 15px;
 }
 
-/* Estilos para dispositivos pequeños */
+/* Estilos específicos para dispositivos pequeños */
 @media screen and (max-width: 600px) {
     header {
         padding: 5%;
