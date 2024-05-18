@@ -21,7 +21,6 @@ function iniciar() {
         document.getElementById("id_binicio").addEventListener('click', mostrarUsuario);
         document.getElementById('id_dlogout').style.display = 'block';
         document.getElementById('id_registerLogin').style.display = 'none';
-
     } else {
         console.log('Usuario no autenticado');
         document.getElementById('id_dlogout').style.display = 'none';
@@ -45,7 +44,6 @@ function iniciar() {
     // Función para cerrar sesión
     document.getElementById('id_bcerrar').addEventListener('click', function () {
         logout();
-        //window.location.reload();
     });
 
     // Función para mostrar la ubicación del taller
@@ -150,9 +148,6 @@ function mostrarInformacionUsuario() {
 }
 
 // FUNCIONES DE FRONT
-// Variable para saber en que archivo .html estoy
-var currentPage = window.location.pathname.split("/").pop();
-
 //  Funciones para ocultar formulario de inicio de sesión y nombre de usuario
 function mostrarInicio(e) {
     e.preventDefault();
@@ -273,7 +268,7 @@ function mostrarCalendario() {
             } else if (contadorDias > diasEnMes(year, month)) {
                 break;
             } else {
-                tablaCalendario += '<td><button class="btnDia" onclick="mostrarDetalleDia(' + year + ',' + month + ',' + contadorDias + ', \'' + DNI + '\')">' + contadorDias + '</button></td>';
+                tablaCalendario += '<td><button class="btnDia" onclick="mostrarDetalleDia(' + year + ',' + month + ',' + contadorDias + ',' + DNI + ')">' + contadorDias + '</button></td>';
                 contadorDias++;
             }
         }
@@ -291,59 +286,89 @@ function diasEnMes(year, month) {
 
 // Función para mostrar el detalle del día seleccionado
 function mostrarDetalleDia(year, month, day, DNI) {
-    var fechaSeleccionada = new Date(year, month - 1, day);
     var detalleDia = document.getElementById('detalleDia');
+
+    // Ocultar el detalle si ya está mostrando
+    if (detalleDia.dataset.visible === 'true') {
+        detalleDia.innerHTML = '';
+        detalleDia.dataset.visible = 'false';
+        return;
+    }
 
     var detalleCalendario = '<h2>' + day + '/' + month + '/' + year + '</h2>';
     detalleCalendario += '<table>';
 
-    detalleCalendario += '<tr><th>Hora</th><th>Disponibilidad</th></tr>';
-
-    var isAdmin = (DNI === '11111111A');
+    detalleCalendario += '<tr><th>Hora</th><th>Disponibilidad</th><th>Anular</th></tr>';
 
     for (var i = 8; i <= 17; i++) { // Horas de 8:00 a 17:00
         detalleCalendario += '<tr>';
         var tdId = 'tdColor' + i;
-        recuperarColorDeLocalStorage(tdId);
         var btnId = 'btnHora' + i;
+        var btnAnularId = 'btnAnular' + i;
         detalleCalendario += '<td id="' + tdId + '" style="background-color: green">' + i + ':00</td>';
-        if (!isAdmin) {
-            detalleCalendario += '<td><button id="' + btnId + '" onclick="cambiarReserva(' + i + ')">Reservar</button></td>';
-        } else {
-            detalleCalendario += '<td><span id="' + btnId + '" style="color: gray;">Reservar</span></td>';
-        }
+        detalleCalendario += '<td><button id="' + btnId + '" onclick="cambiarReserva(' + i + ',' + DNI + ')">Reservar</button></td>';
+        detalleCalendario += '<td><button id="' + btnAnularId + '" onclick="anularReserva(' + i + ',' + DNI + ')">Anular</button></td>';
         detalleCalendario += '</tr>';
-
-
     }
 
     detalleCalendario += '</table>';
     detalleDia.innerHTML = detalleCalendario;
+    detalleDia.dataset.visible = 'true';
+
+    // Recuperar los colores después de generar la tabla
+    for (var i = 8; i <= 17; i++) {
+        var tdId = 'tdColor' + i;
+        recuperarColorDeLocalStorage(tdId);
+    }
 }
 
 // Función para cambiar el color de reserva
-function cambiarReserva(hora) {
+function cambiarReserva(hora, DNI) {
     console.log('cambio color del botón');
     var tdId = 'tdColor' + hora;
     var tdColor = document.getElementById(tdId);
     if (tdColor) {
         tdColor.style.backgroundColor = 'red';
-        guardarColorEnLocalStorage(tdId, 'red');
+        guardarReservaEnLocalStorage(tdId, 'red', DNI);
     }
 }
 
-// Función para guardar el color de fondo en localStorage
-function guardarColorEnLocalStorage(tdId, color) {
-    localStorage.setItem(tdId, color);
+function anularReserva(hora, DNI) {
+    console.log('cambio color del botón');
+    var tdId = 'tdColor' + hora;
+    var reserva = obtenerReservaDeLocalStorage(tdId);
+
+    if (reserva && reserva.color === 'red' && reserva.DNI === DNI) {
+        var tdColor = document.getElementById(tdId);
+        if (tdColor) {
+            tdColor.style.backgroundColor = 'green';
+            guardarReservaEnLocalStorage(tdId, 'green', null);
+        }
+    } else {
+        alert('Solo el usuario que realizó la reserva puede anularla');
+    }
+}
+
+function guardarReservaEnLocalStorage(id, color, DNI) {
+    var reserva = {
+        color: color,
+        DNI: DNI
+    };
+    localStorage.setItem(id, JSON.stringify(reserva));
+}
+
+function obtenerReservaDeLocalStorage(id) {
+    var reserva = localStorage.getItem(id);
+    return reserva ? JSON.parse(reserva) : null;
 }
 
 // Función para recuperar el color de fondo de localStorage y aplicarlo
-function recuperarColorDeLocalStorage(tdId) {
-    var storedColor = localStorage.getItem(tdId);
-    if (storedColor) {
-        var tdColor = document.getElementById(tdId);
+function recuperarColorDeLocalStorage(id) {
+    var reserva = obtenerReservaDeLocalStorage(id);
+    if (reserva && reserva.color) {
+        var tdColor = document.getElementById(id);
         if (tdColor) {
-            tdColor.style.backgroundColor = storedColor;
+            tdColor.style.backgroundColor = reserva.color;
         }
     }
 }
