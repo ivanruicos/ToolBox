@@ -354,22 +354,55 @@ function mostrarDetalleDia(year, month, day, DNI) {
 
 // Función para cambiar el color de reserva
 function cambiarReserva(fecha, hora, DNI) {
+    var DNI = recuperarDNISesion();
+
     var tdId = fecha + '-' + hora;
     var tdColor = document.getElementById(tdId);
     if (tdColor) {
         tdColor.style.backgroundColor = 'red';
         guardarReservaEnLocalStorage(fecha, hora, 'red', DNI);
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {action: 'reservar', fecha: fecha, hora: hora + ':00:00', DNI: DNI},
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
     }
 }
 
 function anularReserva(fecha, hora, DNI) {
+    var DNI = recuperarDNISesion();
     var reserva = obtenerReservaDeLocalStorage(fecha, hora);
+    
     if (reserva && reserva.color === 'red' && reserva.DNI === DNI) {
         var tdId = fecha + '-' + hora;
         var tdColor = document.getElementById(tdId);
         if (tdColor) {
             tdColor.style.backgroundColor = 'green';
             guardarReservaEnLocalStorage(fecha, hora, 'green', null);
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    action: 'anular',
+                    fecha: fecha,
+                    hora: hora + ':00:00',
+                    DNI: DNI
+                },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
         }
     } else {
         alert('Solo el usuario que realizó la reserva puede anularla.');
@@ -592,9 +625,10 @@ function mostrarCitas() {
         success: function (response) {
             var tablaCitas = $("#tablaCitas");
             tablaCitas.empty();
-            tablaCitas.append("<tr><th>Descripción</th><th>Fecha</th></tr>");
-            response.forEach(element => {
-                tablaCitas.append("<tr><td>" + element.descripcion + "</td><td>" + element.fecha + "</td></tr>");
+            tablaCitas.append("<tr><th>Fecha</th><th>Hora</th></tr>");
+            response.forEach(cita => {
+                console.log(response);
+                tablaCitas.append("<tr><td>" + cita.fecha + "</td><td>" + cita.hora + "</td></tr>");
             });
         }
     });

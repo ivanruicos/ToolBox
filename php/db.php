@@ -61,6 +61,20 @@
             $data = $crud->mostrarCitas($DNI);
             print_r($data);
             break;
+        case 'reservar':
+            $DNI = $_POST['DNI'];
+            $fecha = $_POST['fecha'];
+            $hora = $_POST['hora'];
+            $data = $crud->reservar($DNI, $fecha, $hora);
+            echo json_encode($data);
+            break;
+        case 'anular':
+            $DNI = $_POST['DNI'];
+            $fecha = $_POST['fecha'];
+            $hora = $_POST['hora'];
+            $data = $crud->anular($DNI, $fecha, $hora);
+            echo json_encode($data);
+            break;
     }
 
     class db {
@@ -179,10 +193,51 @@
         // Funciones de citas
         public function mostrarCitas($DNI){
             $parametros = array(':DNI' => $DNI);
-            $pdo = $this->db_handler->prepare("SELECT * FROM citas WHERE DNI IN (SELECT DNI FROM clientes WHERE DNI = :DNI)");
+            $pdo = $this->db_handler->prepare("SELECT * FROM citas WHERE DNI = :DNI");
             $pdo -> execute($parametros);
             $devolver = $pdo->fetchAll(PDO::FETCH_ASSOC);
             return json_encode($devolver);
+        }
+
+        public function anular($DNI, $fecha, $hora){
+            $parametros = array(':DNI' => $DNI, ':fecha' => $fecha, ':hora' => $hora);
+            $pdo = $this->db_handler->prepare("DELETE FROM citas WHERE DNI = :DNI AND fecha = :fecha AND hora = :hora");
+
+            try {
+                $pdo->execute($parametros);
+                return $pdo->rowCount();
+            } catch (PDOException $e) {
+                echo "Error al anular la reserva: " . $e->getMessage();
+                return false;
+            }
+        }
+
+        public function reservar($DNI, $fecha, $hora){
+            if (empty($DNI) || empty($fecha) || empty($hora)) {
+                echo "Error: DNI, fecha o hora están vacíos.";
+                return false;
+            }
+        
+            // Verificar si el DNI existe en la tabla clientes
+            $pdo = $this->db_handler->prepare("SELECT DNI FROM clientes WHERE DNI = :DNI");
+            $pdo->execute([':DNI' => $DNI]);
+            if ($pdo->rowCount() == 0) {
+                echo "Error: El DNI no existe en la tabla clientes.";
+                return false;
+            }
+            
+            $parametros = array(':DNI' => $DNI, ':hora' => $hora, ':fecha' => $fecha);
+            $sql = "INSERT INTO citas (DNI, hora, fecha) VALUES (:DNI, :hora, :fecha)";
+            $pdo = $this->db_handler->prepare($sql);
+
+            try {
+                $pdo->execute($parametros);
+                return $pdo->rowCount();
+            } catch (PDOException $e) {
+                echo "Error al insertar la reserva: " . $e->getMessage();
+                echo "\nDNI: $DNI, Fecha: $fecha, Hora: $hora";
+                return false;
+            }
         }
 
         // Funciones de vehiculos
@@ -234,4 +289,5 @@
     // print_r($db->mostrarIntervenciones('11111111A'));
     // echo $db->prueba(17);
     // echo $db->verificarSesion();
+    // echo $db->reservar('70265782T', '2024/05/15', '12:00:00');
 ?>
