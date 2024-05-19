@@ -299,8 +299,10 @@ textarea {
 
 #index img {
     border: 5px solid white;
-    width: 50%;
-    height: 60%;
+    width: 60%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
 }
 
 #intervenciones, #vehiculos, #citas {
