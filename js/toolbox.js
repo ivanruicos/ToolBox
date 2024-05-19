@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", iniciar, false);
 
+var sesionIniciada = false;
+
 function iniciar() {
     cambiarVista(window.location.hash.substring(1));
 
@@ -56,10 +58,12 @@ function iniciar() {
     }
 
     document.getElementById('id_binicio').addEventListener('click', function() {
+        sesionIniciada = true;
         habilitarBotonesReserva();
     });
 
     document.getElementById('id_bcerrar').addEventListener('click', function() {
+        sesionIniciada = false;
         deshabilitarBotonesReserva();
     });
 
@@ -329,8 +333,8 @@ function mostrarDetalleDia(year, month, day, DNI) {
         var tdId = fecha + '-' + i;
         detalleCalendario += '<tr>';
         detalleCalendario += '<td id="' + tdId + '" style="background-color: green">' + i + ':00</td>';
-        detalleCalendario += '<td><button class="btnReserva" id="btnHora' + i + '" onclick="cambiarReserva(\'' + fecha + '\', ' + i + ', \'' + DNI + '\')" disabled>Reservar</button></td>';
-        detalleCalendario += '<td><button class="btnReserva" id="btnAnular' + i + '" onclick="anularReserva(\'' + fecha + '\', ' + i + ', \'' + DNI + '\')" disabled>Anular</button></td>';
+        detalleCalendario += '<td><button class="btnReserva" id="btnHora' + i + '" onclick="cambiarReserva(\'' + fecha + '\', ' + i + ', \'' + DNI + '\')" ' + (sesionIniciada ? '' : 'disabled') + '>Reservar</button></td>';
+        detalleCalendario += '<td><button class="btnReserva" id="btnAnular' + i + '" onclick="anularReserva(\'' + fecha + '\', ' + i + ', \'' + DNI + '\')" ' + (sesionIniciada ? '' : 'disabled') + '>Anular</button></td>';
         detalleCalendario += '</tr>';
     }
 
