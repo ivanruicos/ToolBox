@@ -55,6 +55,14 @@ function iniciar() {
         mostrarFechaActual();
     }
 
+    document.getElementById('id_binicio').addEventListener('click', function() {
+        habilitarBotonesReserva();
+    });
+
+    document.getElementById('id_bcerrar').addEventListener('click', function() {
+        deshabilitarBotonesReserva();
+    });
+
     // Función para mostrar intervenciones
     if (document.getElementById('mostrarIntervenciones')) {
         $('#id_DNILogin').on('keyup', function () {
@@ -222,6 +230,22 @@ function mapa() {
     }
 }
 
+// Función para habilitar los botones de reserva y anulación al iniciar sesión
+function habilitarBotonesReserva() {
+    var botonesReserva = document.querySelectorAll('.btnReserva');
+    botonesReserva.forEach(function(boton) {
+        boton.disabled = false;
+    });
+}
+
+// Función para deshabilitar los botones de reserva y anulación al cerrar sesión
+function deshabilitarBotonesReserva() {
+    var botonesReserva = document.querySelectorAll('.btnReserva');
+    botonesReserva.forEach(function(boton) {
+        boton.disabled = true;
+    });
+}
+
 // Funciones para mostrar el calendario 
 function mostrarFechaActual() {
     var fechaActual = new Date();
@@ -251,11 +275,11 @@ function mostrarCalendario() {
 
     var primerDiaMes = new Date(year, month - 1, 1);
 
-    var primerDiaSemana = primerDiaMes.getDay(); // 0 (domingo) a 6 (sábado)
+    var primerDiaSemana = (primerDiaMes.getDay() + 6) % 7; // Ajuste para que el lunes sea el numero 0
 
     var tablaCalendario = '<table class="tablaCalendario">';
 
-    tablaCalendario += '<tr><th>Domingo</th><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th><th>Sábado</th></tr>';
+    tablaCalendario += '<tr><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th><th>Sábado</th><th>Domingo</th></tr>';
 
     var contadorDias = 1;
 
@@ -266,9 +290,9 @@ function mostrarCalendario() {
             if (i === 0 && j < primerDiaSemana) {
                 tablaCalendario += '<td></td>';
             } else if (contadorDias > diasEnMes(year, month)) {
-                break;
+                tablaCalendario += '<td></td>';
             } else {
-                tablaCalendario += '<td><button class="btnDia" onclick="mostrarDetalleDia(' + year + ',' + month + ',' + contadorDias + ',' + DNI + ')">' + contadorDias + '</button></td>';
+                tablaCalendario += '<td><button class="btnDia" onclick="mostrarDetalleDia(' + year + ',' + month + ',' + contadorDias + ', \'' + DNI + '\')">' + contadorDias + '</button></td>';
                 contadorDias++;
             }
         }
@@ -286,10 +310,11 @@ function diasEnMes(year, month) {
 
 // Función para mostrar el detalle del día seleccionado
 function mostrarDetalleDia(year, month, day, DNI) {
+    var fecha = year + '-' + month + '-' + day;
     var detalleDia = document.getElementById('detalleDia');
-
+    
     // Ocultar el detalle si ya está mostrando
-    if (detalleDia.dataset.visible === 'true') {
+    if (detalleDia.dataset.fecha === fecha && detalleDia.dataset.visible === 'true') {
         detalleDia.innerHTML = '';
         detalleDia.dataset.visible = 'false';
         return;
@@ -301,55 +326,51 @@ function mostrarDetalleDia(year, month, day, DNI) {
     detalleCalendario += '<tr><th>Hora</th><th>Disponibilidad</th><th>Anular</th></tr>';
 
     for (var i = 8; i <= 17; i++) { // Horas de 8:00 a 17:00
+        var tdId = fecha + '-' + i;
         detalleCalendario += '<tr>';
-        var tdId = 'tdColor' + i;
-        var btnId = 'btnHora' + i;
-        var btnAnularId = 'btnAnular' + i;
         detalleCalendario += '<td id="' + tdId + '" style="background-color: green">' + i + ':00</td>';
-        detalleCalendario += '<td><button id="' + btnId + '" onclick="cambiarReserva(' + i + ',' + DNI + ')">Reservar</button></td>';
-        detalleCalendario += '<td><button id="' + btnAnularId + '" onclick="anularReserva(' + i + ',' + DNI + ')">Anular</button></td>';
+        detalleCalendario += '<td><button class="btnReserva" id="btnHora' + i + '" onclick="cambiarReserva(\'' + fecha + '\', ' + i + ', \'' + DNI + '\')" disabled>Reservar</button></td>';
+        detalleCalendario += '<td><button class="btnReserva" id="btnAnular' + i + '" onclick="anularReserva(\'' + fecha + '\', ' + i + ', \'' + DNI + '\')" disabled>Anular</button></td>';
         detalleCalendario += '</tr>';
     }
 
     detalleCalendario += '</table>';
     detalleDia.innerHTML = detalleCalendario;
+    detalleDia.dataset.fecha = fecha;
     detalleDia.dataset.visible = 'true';
 
     // Recuperar los colores después de generar la tabla
     for (var i = 8; i <= 17; i++) {
-        var tdId = 'tdColor' + i;
-        recuperarColorDeLocalStorage(tdId);
+        recuperarColorDeLocalStorage(fecha, i);
     }
 }
 
 // Función para cambiar el color de reserva
-function cambiarReserva(hora, DNI) {
-    console.log('cambio color del botón');
-    var tdId = 'tdColor' + hora;
+function cambiarReserva(fecha, hora, DNI) {
+    var tdId = fecha + '-' + hora;
     var tdColor = document.getElementById(tdId);
     if (tdColor) {
         tdColor.style.backgroundColor = 'red';
-        guardarReservaEnLocalStorage(tdId, 'red', DNI);
+        guardarReservaEnLocalStorage(fecha, hora, 'red', DNI);
     }
 }
 
-function anularReserva(hora, DNI) {
-    console.log('cambio color del botón');
-    var tdId = 'tdColor' + hora;
-    var reserva = obtenerReservaDeLocalStorage(tdId);
-
+function anularReserva(fecha, hora, DNI) {
+    var reserva = obtenerReservaDeLocalStorage(fecha, hora);
     if (reserva && reserva.color === 'red' && reserva.DNI === DNI) {
+        var tdId = fecha + '-' + hora;
         var tdColor = document.getElementById(tdId);
         if (tdColor) {
             tdColor.style.backgroundColor = 'green';
-            guardarReservaEnLocalStorage(tdId, 'green', null);
+            guardarReservaEnLocalStorage(fecha, hora, 'green', null);
         }
     } else {
-        alert('Solo el usuario que realizó la reserva puede anularla');
+        alert('Solo el usuario que realizó la reserva puede anularla.');
     }
 }
 
-function guardarReservaEnLocalStorage(id, color, DNI) {
+function guardarReservaEnLocalStorage(fecha, hora, color, DNI) {
+    var id = fecha + '-' + hora;
     var reserva = {
         color: color,
         DNI: DNI
@@ -357,16 +378,17 @@ function guardarReservaEnLocalStorage(id, color, DNI) {
     localStorage.setItem(id, JSON.stringify(reserva));
 }
 
-function obtenerReservaDeLocalStorage(id) {
+function obtenerReservaDeLocalStorage(fecha, hora) {
+    var id = fecha + '-' + hora;
     var reserva = localStorage.getItem(id);
     return reserva ? JSON.parse(reserva) : null;
 }
 
-// Función para recuperar el color de fondo de localStorage y aplicarlo
-function recuperarColorDeLocalStorage(id) {
-    var reserva = obtenerReservaDeLocalStorage(id);
+function recuperarColorDeLocalStorage(fecha, hora) {
+    var reserva = obtenerReservaDeLocalStorage(fecha, hora);
     if (reserva && reserva.color) {
-        var tdColor = document.getElementById(id);
+        var tdId = fecha + '-' + hora;
+        var tdColor = document.getElementById(tdId);
         if (tdColor) {
             tdColor.style.backgroundColor = reserva.color;
         }

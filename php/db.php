@@ -213,27 +213,6 @@
             $pdo->execute($parametros);
             return $pdo->rowcount();
         }
-
-        public function sendEmail($name, $email, $message) {
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $name = htmlspecialchars($_POST['name']);
-                $email = htmlspecialchars($_POST['email']);
-                $message = htmlspecialchars($_POST['message']);
-            
-                $to = "ruizcostaivan9@gmail.com";
-                $subject = "Nuevo mensaje del formulario de contacto";
-                $body = "Nombre: $name\nCorreo Electrónico: $email\nMensaje:\n$message";
-                $headers = "From: $email";
-            
-                if (mail($to, $subject, $body, $headers)) {
-                    echo "Mensaje enviado correctamente.";
-                } else {
-                    echo "Error al enviar el mensaje.";
-                }
-            } else {
-                echo "Método de solicitud no permitido.";
-            }
-        }
     }
 
     // Conectar a la base de datos
@@ -255,5 +234,4 @@
     // print_r($db->mostrarIntervenciones('11111111A'));
     // echo $db->prueba(17);
     // echo $db->verificarSesion();
-    // echo $db->sendEmail('Ivan', 'ruizcostaivan9@gmail.com', 'Prueba');
 ?>
