@@ -278,7 +278,7 @@ p a {
     align-items: center;
 }
 
-input {
+fieldset form input {
     -webkit-box-sizing: border-box;
     width: 100%;
     padding: 10px;
