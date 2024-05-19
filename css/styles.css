@@ -266,7 +266,7 @@ p a {
     font-weight: bold;
 }
 
-#comunicacion, #informacion {
+#comunicacion, #informacion, #index {
     flex: 1 1 calc(40% - 20px);
     max-width: 80%;
     padding: 1%;
@@ -286,6 +286,7 @@ p a {
     box-sizing: border-box;
     border-radius: 5px;
 }
+
 textarea {
     -webkit-box-sizing: border-box;
     width: 100%;
@@ -294,6 +295,12 @@ textarea {
     box-sizing: border-box;
     border-radius: 5px;
     resize: none;
+}
+
+#index img {
+    border: 5px solid white;
+    width: 50%;
+    height: 60%;
 }
 
 #intervenciones, #vehiculos, #citas {

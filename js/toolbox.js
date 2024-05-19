@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", iniciar, false);
 var sesionIniciada = false;
 
 function iniciar() {
+    // Funciones para el carruel de fotos
+    carrusel();
+
     cambiarVista(window.location.hash.substring(1));
 
     // Mostrar la vista correspondiente al cambiar el hash en la URL
@@ -397,6 +400,23 @@ function recuperarColorDeLocalStorage(fecha, hora) {
             tdColor.style.backgroundColor = reserva.color;
         }
     }
+}
+
+// Función para el carrusel de fotos
+function carrusel(){
+    var banner = new Array("img/carrusel1.jpg", "img/carrusel2.jpg", "img/carrusel3.jpg", "img/carrusel4.jpg", "img/carrusel5.jpg");
+    var cont = 0;
+    var numImagenes = banner.length;
+    
+    function rotate(){
+        if(document.images){
+            cont++;
+            if(cont == numImagenes) cont = 0;
+            document.getElementById("imgBanner").src = banner[cont];
+        }
+        window.setTimeout(rotate, 3000);
+    }
+    rotate();
 }
 
 // FUNCIONES DE BACK
