@@ -355,6 +355,7 @@ function mostrarDetalleDia(year, month, day, DNI) {
 // Función para cambiar el color de reserva
 function cambiarReserva(fecha, hora, DNI) {
     var DNI = recuperarDNISesion();
+    console.log('DNI recuperado:', DNI);
 
     var tdId = fecha + '-' + hora;
     var tdColor = document.getElementById(tdId);
@@ -367,7 +368,7 @@ function cambiarReserva(fecha, hora, DNI) {
             url: url,
             data: {action: 'reservar', fecha: fecha, hora: hora + ':00:00', DNI: DNI},
             success: function (response) {
-                console.log(response);
+                mostrarCitas();
             },
             error: function (error) {
                 console.error('Error:', error);
@@ -397,7 +398,7 @@ function anularReserva(fecha, hora, DNI) {
                     DNI: DNI
                 },
                 success: function (response) {
-                    console.log(response);
+                    mostrarCitas();
                 },
                 error: function (error) {
                     console.error('Error:', error);
@@ -447,7 +448,7 @@ function carrusel(){
             if(cont == numImagenes) cont = 0;
             document.getElementById("imgBanner").src = banner[cont];
         }
-        window.setTimeout(rotate, 3000);
+        window.setTimeout(rotate, 7000);
     }
     rotate();
 }
@@ -615,7 +616,15 @@ function mostrarVehiculos() {
 
 // Función para mostrar averías
 function mostrarCitas() {
-    let DNI = $('#id_DNILogin').val();
+    let DNI;
+    
+    if(sesionIniciada == true){
+        DNI = recuperarDNISesion();
+    } else {
+        DNI = $('#id_DNILogin').val();
+    }
+    
+    console.log('DNI para mostrar citas:', DNI);
 
     $.ajax({
         type: "post",
@@ -623,11 +632,13 @@ function mostrarCitas() {
         data: { action: 'showCitas', DNI: DNI, nocache: Math.random() },
         dataType: "json",
         success: function (response) {
+            console.log('tabla');
             var tablaCitas = $("#tablaCitas");
             tablaCitas.empty();
             tablaCitas.append("<tr><th>Fecha</th><th>Hora</th></tr>");
             response.forEach(cita => {
-                console.log(response);
+                console.log('response');
+                console.log(cita);
                 tablaCitas.append("<tr><td>" + cita.fecha + "</td><td>" + cita.hora + "</td></tr>");
             });
         }

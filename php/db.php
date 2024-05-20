@@ -66,14 +66,14 @@
             $fecha = $_POST['fecha'];
             $hora = $_POST['hora'];
             $data = $crud->reservar($DNI, $fecha, $hora);
-            echo json_encode($data);
+            print_r($data);
             break;
         case 'anular':
             $DNI = $_POST['DNI'];
             $fecha = $_POST['fecha'];
             $hora = $_POST['hora'];
             $data = $crud->anular($DNI, $fecha, $hora);
-            echo json_encode($data);
+            print_r($data);
             break;
     }
 
