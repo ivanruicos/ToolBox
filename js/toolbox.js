@@ -21,13 +21,13 @@ function iniciar() {
 
     // Comprobar si el token existe
     if (token && DNI) {
-        console.log('Usuario autenticado');
+        //console.log('Usuario autenticado');
         mostrarInformacionUsuario();
         document.getElementById("id_binicio").addEventListener('click', mostrarUsuario);
         document.getElementById('id_dlogout').style.display = 'block';
         document.getElementById('id_registerLogin').style.display = 'none';
     } else {
-        console.log('Usuario no autenticado');
+        //console.log('Usuario no autenticado');
         document.getElementById('id_dlogout').style.display = 'none';
     }
 
@@ -355,7 +355,7 @@ function mostrarDetalleDia(year, month, day, DNI) {
 // Función para cambiar el color de reserva
 function cambiarReserva(fecha, hora, DNI) {
     var DNI = recuperarDNISesion();
-    console.log('DNI recuperado:', DNI);
+    //console.log('DNI recuperado:', DNI);
 
     var tdId = fecha + '-' + hora;
     var tdColor = document.getElementById(tdId);
@@ -501,13 +501,13 @@ function login() {
 
             if (responseObject.token) {
                 almacenarTokenSesion(responseObject.token);
-                console.log('Sesión iniciada con token: ' + responseObject.token);
+                //console.log('Sesión iniciada con token: ' + responseObject.token);
             }
 
             if (responseObject.nombre) {
                 almacenarNombreSesion(responseObject.nombre);
                 almacenarDNISesion(DNI);
-                console.log('Sesión iniciada con nombre: ' + responseObject.nombre);
+                //console.log('Sesión iniciada con nombre: ' + responseObject.nombre);
             }
         },
         error: function () {
@@ -532,37 +532,6 @@ function logout() {
             $("#tablaIntervencion").empty();
             $("#tablaVehiculos").empty();
             $("#tablaCitas").empty();
-        },
-        error: function () {
-            window.alert("Se ha producido un error");
-        }
-    });
-}
-
-// Funciones de vehiculos
-function registerVehiculo() {
-    $.ajax({
-        type: "post",
-        url: url,
-        async: true,
-        data: { action: 'insertVehiculo' }, // falta agregar valores
-        success: function (respuesta) {
-            console.log(respuesta);
-        },
-        error: function () {
-            window.alert("Se ha producido un error");
-        }
-    });
-}
-
-function removeVehiculo() {
-    $.ajax({
-        type: "post",
-        url: url,
-        async: true,
-        data: { action: 'deleteVehiculo' }, // falta agregar valores
-        success: function (respuesta) {
-            console.log(respuesta);
         },
         error: function () {
             window.alert("Se ha producido un error");
@@ -617,14 +586,14 @@ function mostrarVehiculos() {
 // Función para mostrar averías
 function mostrarCitas() {
     let DNI;
-    
+
     if(sesionIniciada == true){
         DNI = recuperarDNISesion();
     } else {
         DNI = $('#id_DNILogin').val();
     }
     
-    console.log('DNI para mostrar citas:', DNI);
+    //console.log('DNI para mostrar citas:', DNI);
 
     $.ajax({
         type: "post",
@@ -632,13 +601,13 @@ function mostrarCitas() {
         data: { action: 'showCitas', DNI: DNI, nocache: Math.random() },
         dataType: "json",
         success: function (response) {
-            console.log('tabla');
+            //console.log('tabla');
             var tablaCitas = $("#tablaCitas");
             tablaCitas.empty();
             tablaCitas.append("<tr><th>Fecha</th><th>Hora</th></tr>");
             response.forEach(cita => {
-                console.log('response');
-                console.log(cita);
+                //console.log('response');
+                //console.log(cita);
                 tablaCitas.append("<tr><td>" + cita.fecha + "</td><td>" + cita.hora + "</td></tr>");
             });
         }
