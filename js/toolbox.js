@@ -115,6 +115,15 @@ function cambiarVista(hash) {
             vista.style.display = 'none';
         }
     });
+
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+        if(link.getAttribute('href') === `#${hash}`) {
+            link.classList.add('seleccionado');
+        } else {
+            link.classList.remove('seleccionado');
+        }
+    });
 }
 
 // Funciones para manejar el token de inicio de sesión

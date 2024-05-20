@@ -122,7 +122,14 @@ footer img {
     height: 30px;
 }
 
-a {
+nav a {
+    text-decoration: none;
+    color: rgba(255, 71, 71, 0.9);
+    height: 100%;
+    padding: 0.5%;
+}
+
+h1 a{
     text-decoration: none;
     color: rgba(255, 71, 71, 0.9);
     height: 100%;
