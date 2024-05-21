@@ -64,6 +64,8 @@ article {
     margin: 1%;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    width: 100%;
 }
 
 aside {
@@ -130,8 +132,14 @@ nav a {
     font-weight: bold;
 }
 
-h1 a, #informacion a{
+h1 a{
     text-decoration: none;
+    color: rgba(255, 71, 71, 0.9);
+    height: 100%;
+}
+
+#informacion a{
+    text-decoration: underline;
     color: rgba(255, 71, 71, 0.9);
     height: 100%;
 }
@@ -331,7 +339,7 @@ textarea {
 #intervenciones article, #citas article{
     display: inline-block;
     margin-left: 7%;
-    width: 50%;
+    width: 100%;
 }
 
 #intervenciones h1, #vehiculos h1, #citas h1, #mostrarCitas h1 {
@@ -340,16 +348,14 @@ textarea {
 }
 
 #tablaIntervencion, #tablaVehiculos, #tablaCitas {
+    width: 100%;
     margin: 0 auto;
+    display: block;
 }
 
-#tablaIntervencion tr th, #tablaVehiculos tr th, #tablaCitas tr th {
-    margin-right: 5%;
-    padding: 15px;
-}
-
+#tablaIntervencion tr th, #tablaVehiculos tr th, #tablaCitas tr th,
 #tablaIntervencion tr td, #tablaVehiculos tr td, #tablaCitas tr td {
-    margin-right: 5%;
+    text-align: center;
     padding: 15px;
 }
 
@@ -394,6 +400,9 @@ textarea {
     nav {
         position: fixed;
         top: calc(4% + 4em);
+    }
+    #map {
+        display: none;
     }
 }
 
