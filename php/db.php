@@ -23,12 +23,6 @@
             $data = $crud->login($DNI, $password);
             print_r($data);
             break;
-        case 'edit':
-            
-            break;
-        case 'delete':
-            
-            break;
         case 'logout':
             $crud->logout();
             break;
@@ -169,18 +163,6 @@
             }
         }
 
-        // Funciones de averias
-        public function mostrarAverias($DNI){
-            $parametros = array(':DNI' => $DNI);
-            $pdo = $this->db_handler->prepare("SELECT averias.* 
-            FROM averias
-            JOIN clientes ON averias.DNI = clientes.DNI
-            WHERE clientes.DNI = :DNI");
-            $pdo -> execute($parametros);
-            $devolver = $pdo->fetchAll(PDO::FETCH_ASSOC);
-            return json_encode($devolver);
-        }
-
         // Funciones de intervenciones
         public function mostrarIntervenciones($DNI){
             $parametros = array(':DNI' => $DNI);
@@ -247,26 +229,6 @@
             $pdo -> execute($parametros);
             $devolver = $pdo->fetchAll(PDO::FETCH_ASSOC);
             return json_encode($devolver);
-        }
-
-        public function insertVehiculo($id_c, $matricula, $marca, $modelo, $kilometros, $anio){
-            $parametros = array('id_c' => $id_c, ':matricula' => $matricula, ':marca' => $marca, ':modelo' => $modelo, ':kilometros' => $kilometros, ':anio' => $anio);
-            $pdo = $this->db_handler->prepare("INSERT INTO vehiculos (id_c, matricula, marca, modelo, kilometros, anio) VALUES (:id_c, :matricula, :marca, :modelo, :kilometros, :anio)");
-
-            try {
-                $pdo->execute($parametros);
-                return $pdo->rowCount();
-            } catch (PDOException $e) {
-                echo "Error al insertar: " . $e->getMessage();
-                return false;
-            }
-        }
-
-        public function deleteVehiculo($id_v){
-            $parametros = array(":id_v"=>$id_v);
-            $pdo = $this->db_handler->prepare("DELETE FROM vehiculos WHERE id_v = :id_v");
-            $pdo->execute($parametros);
-            return $pdo->rowcount();
         }
     }
 
