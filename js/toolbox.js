@@ -220,6 +220,9 @@ function mapa() {
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
             var marker = L.marker([40.9265351, -4.1118941]).addTo(map);
+            L.marker([40.9265351, -4.1118941]).addTo(map)
+                .bindPopup('TOOL BOX')
+                .openPopup();
         },
 
             function (objPositionError) {
