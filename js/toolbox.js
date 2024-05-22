@@ -49,6 +49,7 @@ function iniciar() {
     // Función para cerrar sesión
     document.getElementById('id_bcerrar').addEventListener('click', function () {
         logout();
+        rutaInicio();
     });
 
     // Función para mostrar la ubicación del taller
@@ -544,8 +545,6 @@ function logout() {
             $("#tablaIntervencion").empty();
             $("#tablaVehiculos").empty();
             $("#tablaCitas").empty();
-
-            rutaInicio();
         },
         error: function () {
             window.alert("Se ha producido un error");
