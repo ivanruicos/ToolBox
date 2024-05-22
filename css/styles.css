@@ -420,18 +420,16 @@ textarea {
     }
 }
 
-@media screen and (max-width: 1436px) {
+@media screen and (max-width: 1450px) {
     header {
         padding: 2%;
         max-width: 100%;
     }
 
     nav {
-        max-width: 100%;
         padding: 1%;
-        font-size: 1.5vw;
         position: fixed;
-        top: calc(4% + 4em);
+        top: calc(7% + 4em);
     }
 
     section {
@@ -447,5 +445,17 @@ textarea {
 
     .contenedor {
         margin-top: 12%;
+    }
+
+    #id_dregister{
+        position: fixed;
+        top: 1%;
+        right: 2%;
+    }
+
+    #id_dlogin {
+        position: fixed;
+        top: 2%;
+        right: 2%;
     }
 }
