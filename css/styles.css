@@ -418,6 +418,24 @@ textarea {
     #map {
         display: none;
     }
+
+    #id_dregister{
+        position: fixed;
+        top: 1%;
+        right: 2%;
+    }
+
+    #id_dlogout{
+        position: fixed;
+        top: 1%;
+        right: 2%;
+    }
+
+    #id_dlogin {
+        position: fixed;
+        top: 2%;
+        right: 2%;
+    }
 }
 
 @media screen and (max-width: 1450px) {
