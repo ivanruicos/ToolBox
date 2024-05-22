@@ -420,9 +420,32 @@ textarea {
     }
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1436px) {
+    header {
+        padding: 2%;
+        max-width: 100%;
+    }
+
     nav {
+        max-width: 100%;
+        padding: 1%;
+        font-size: 1.5vw;
         position: fixed;
         top: calc(4% + 4em);
+    }
+
+    section {
+        margin-top: 5%;
+        margin-bottom: 15%;
+    }
+
+    article {
+        flex: 1 1 94%;
+        max-width: 60%;
+        margin: 0 3%;
+    }
+
+    .contenedor {
+        margin-top: 12%;
     }
 }
