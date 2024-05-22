@@ -544,6 +544,8 @@ function logout() {
             $("#tablaIntervencion").empty();
             $("#tablaVehiculos").empty();
             $("#tablaCitas").empty();
+
+            rutaInicio();
         },
         error: function () {
             window.alert("Se ha producido un error");
