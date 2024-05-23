@@ -308,6 +308,34 @@
                 return false;
             }
         }
+
+        public function auth(){
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $dni = $_POST['dni'] ?? null;
+                $password = $_POST['password'] ?? null;
+            
+                if ($dni && $password) {
+                    try {
+                        $query = $this->db_handler->prepare("SELECT * FROM users WHERE dni = :dni AND password = :password");
+                        $query->execute([':dni' => $dni, ':password' => $password]);
+                        $user = $query->fetch(PDO::FETCH_ASSOC);
+            
+                        if ($user) {
+                            $_SESSION['user'] = $user;
+                            echo json_encode(['success' => true]);
+                        } else {
+                            echo json_encode(['success' => false, 'message' => 'DNI o contraseña incorrectos']);
+                        }
+                    } catch (PDOException $e) {
+                        echo json_encode(['success' => false, 'message' => "Error al autenticar: " . $e->getMessage()]);
+                    }
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Datos incompletos']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Método no permitido']);
+            }
+        }
     }
 
     // Conectar a la base de datos

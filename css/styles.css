@@ -180,7 +180,7 @@ h1 a{
     font-size: 0.8em;
 }
 
-#id_dlogout, #id_dlogin, #id_dregister, #intervenciones, #vehiculos, #mostrarCitas {
+#id_dlogout, #id_dlogin, #id_dregister, #intervenciones, #vehiculos, #mostrarCitas, #admin {
     display: none;
 }
 
@@ -284,7 +284,7 @@ p a {
     font-weight: bold;
 }
 
-#comunicacion, #informacion, #index {
+#comunicacion, #informacion, #index, #admin {
     flex: 1 1 calc(40% - 20px);
     max-width: 80%;
     padding: 1%;
@@ -296,7 +296,7 @@ p a {
     align-items: center;
 }
 
-#comunicacion article form input {
+#comunicacion article form input, #admin article form input {
     -webkit-box-sizing: border-box;
     width: 100%;
     padding: 10px;

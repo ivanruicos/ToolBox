@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", iniciar, false);
 
 var sesionIniciada = false;
+var isAdmin = false;
 
 function iniciar() {
     // Funciones para el carruel de fotos
@@ -18,6 +19,10 @@ function iniciar() {
     // Cargar el token
     var token = recuperarTokenSesion();
     var DNI = recuperarDNISesion();
+
+    if($('#id_DNILogin').val() === '11111111A'){
+        $('#admin').show();
+    }
 
     // Comprobar si el token existe
     if (token && DNI) {
@@ -527,6 +532,10 @@ function login() {
                 almacenarDNISesion(DNI);
                 //console.log('Sesión iniciada con nombre: ' + responseObject.nombre);
             }
+
+            if(DNI === '11111111A'){
+                $('#enlaceAdmin').show();
+            }
         },
         error: function () {
             window.alert("Se ha producido un error");
@@ -552,6 +561,8 @@ function logout() {
             $("#tablaCitas").empty();
 
             rutaInicio();
+
+            $('#enlaceAdmin').hide();
         },
         error: function () {
             window.alert("Se ha producido un error");
@@ -642,6 +653,13 @@ function insertVehiculos(){
     let anio = $('#anio').val();
     let modelo = $('#modelo').val();
 
+    $('#DNIInsertar').val('');
+    $('#matricula').val('');
+    $('#marca').val('');
+    $('#kilometros').val('');
+    $('#anio').val('');
+    $('#modelo').val('');
+
     $.ajax({
         type: "POST",
         url: url,
@@ -656,7 +674,7 @@ function insertVehiculos(){
             modelo: modelo
         },
         success: function (response) {
-            console.log(response);
+            window.alert('Vehiculo guardado correctamente');
         },
         error: function(){
             window.alert('error al insertar vehículo');
@@ -670,10 +688,10 @@ function insertIntervenciones(){
     let descripcion = $('#descripcion').val();
     let precio = $('#precio').val();
 
-    console.log(id_v);
-    console.log(fecha);
-    console.log(descripcion);
-    console.log(precio);
+    $('#id_vInsertar').val('');
+    $('#fecha').val('');
+    $('#descripcion').val('');
+    $('#precio').val('');
 
     $.ajax({
         type: "POST",
@@ -688,7 +706,7 @@ function insertIntervenciones(){
         },
         dataType: "json",
         success: function (response) {
-            console.log(response);
+            window.alert('Intervención guardada correctamente');
         },
         error: function(){
             window.alert('error al insertar intervencion');

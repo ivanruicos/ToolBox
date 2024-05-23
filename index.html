@@ -28,15 +28,15 @@
             <button id="id_register" class="inicio">Registrarse</button>
         </div>
         <div class="login" id="id_dregister">
-            DNI <input type="text" name="DNI" id="id_DNIRegister" placeholder="DNI"><br>
-            Nombre <input type="text" name="nombre" id="id_nombreRegister" placeholder="Nombre"><br>
-            Password <input type="password" name="password" id="id_passwordRegister" placeholder="Contraseña"><br>
+            DNI <input type="text" name="DNI" id="id_DNIRegister" placeholder="DNI" required><br>
+            Nombre <input type="text" name="nombre" id="id_nombreRegister" placeholder="Nombre" required><br>
+            Password <input type="password" name="password" id="id_passwordRegister" placeholder="Contraseña" required><br>
             <button id="id_bregistro" class="inicio">Registrarse</button>
         </div>
         <div class="login" id="id_dlogin">
             <form action="" id="id_form_login">
-                DNI <input type="text" name="DNI" id="id_DNILogin" placeholder="DNI"><br>
-                Password <input type="password" name="password" id="id_passwordLogin" placeholder="Contraseña"><br>
+                DNI <input type="text" name="DNI" id="id_DNILogin" placeholder="DNI" required><br>
+                Password <input type="password" name="password" id="id_passwordLogin" placeholder="Contraseña" required><br>
                 <button id="id_binicio" class="inicio">Iniciar sesión</button>
             </form>
         </div>
@@ -46,11 +46,11 @@
         </div>
     </header>
     <nav>
-        <a href="#comunicacion">Comunicación</a></b>
+        <a href="#comunicacion">Comunicación</a>
         <a href="#informacion">Información</a>
         <a href="#intervenciones">Intervenciones</a>
         <a href="#citas">Citas</a>
-        <a href="#admin">Admin</a>
+        <a href="#admin" id="enlaceAdmin" style="display: none;">Admin</a>
     </nav>
     <div class="contenedor">
         <section>
@@ -68,62 +68,6 @@
                 </p>
             </aside>
 
-            <div id="index" style="display: none;" class="vista">
-                <article>
-                    <h1>Insertar vehiculo</h1>
-                    <form action="">
-                        <label for="DNIInsertar">DNI:</label>
-                        <input type="text" id="DNIInsertar" name="DNIInsertar">
-                        <br>
-
-                        <label for="matricula">Matricula:</label>
-                        <input type="text" id="matricula" name="matricula">
-                        <br>
-
-                        <label for="marca">Marca:</label>
-                        <input type="text" id="marca" name="marca">
-                        <br>
-
-                        <label for="kilometros">Kilometros:</label>
-                        <input type="text" id="kilometros" name="kilometros">
-                        <br>
-
-                        <label for="anio">Año: </label>
-                        <input type="text" id="anio" name="anio">
-                        <br>
-
-                        <label for="modelo">Modelo: </label>
-                        <input type="text" id="modelo" name="modelo">
-                        <br>
-
-                        <input type="button" value="Guardar vehículo" id="btnInsertarVehiculo">
-                    </form>
-                </article>
-
-                <article>
-                    <h1>Insertar intervenciones</h1>
-                    <form action="">
-                        <label for="id_vInsertar">Id vehículo:</label>
-                        <input type="text" id="id_vInsertar" name="id_vInsertar">
-                        <br>
-
-                        <label for="fecha">Fecha:</label>
-                        <input type="text" id="fecha" name="fecha">
-                        <br>
-
-                        <label for="descripcion">Descripción:</label>
-                        <input type="text" id="descripcion" name="descripcion">
-                        <br>
-
-                        <label for="precio">Precio:</label>
-                        <input type="text" id="precio" name="precio">
-                        <br>
-
-                        <input type="button" value="Guardar intervención" id="btnInsertarIntervencion">
-                    </form>
-                </article>
-            </div>
-
             <div id="index" class="vista">
                 <img src="img/fondo.jpg" id="imgBanner">
             </div>
@@ -133,13 +77,13 @@
                     <p>Desde aquí podrá mandar un mensaje consultando dudas al taller</p>
                     <form action="https://formsubmit.co/ruizcostaivan9@gmail.com" method="post">
                         <label for="name">Nombre:</label>
-                        <input type="text" id="name" name="name">
+                        <input type="text" id="name" name="name" required>
                         <br>
                         <label for="subject">Asunto</label>
-                        <input type="text" id="subject" name="subject">
+                        <input type="text" id="subject" name="subject" required>
                         <br>
                         <label for="message">Mensaje:</label>
-                        <textarea id="message" name="message"></textarea>
+                        <textarea id="message" name="message" required></textarea>
                         <br>
                         <input type="submit" class="inicio" value="Enviar">
 
@@ -232,6 +176,61 @@
                     <table id="tablaCitas">
 
                     </table>
+                </article>
+            </div>
+            <div id="admin" style="display: none;" class="vista">
+                <article>
+                    <h1>Insertar vehiculo</h1>
+                    <form action="">
+                        <label for="DNIInsertar">DNI:</label>
+                        <input type="text" id="DNIInsertar" name="DNIInsertar" required>
+                        <br>
+
+                        <label for="matricula">Matricula:</label>
+                        <input type="text" id="matricula" name="matricula" required>
+                        <br>
+
+                        <label for="marca">Marca:</label>
+                        <input type="text" id="marca" name="marca" required>
+                        <br>
+
+                        <label for="kilometros">Kilometros:</label>
+                        <input type="text" id="kilometros" name="kilometros" required>
+                        <br>
+
+                        <label for="anio">Año: </label>
+                        <input type="text" id="anio" name="anio" required>
+                        <br>
+
+                        <label for="modelo">Modelo: </label>
+                        <input type="text" id="modelo" name="modelo" required>
+                        <br>
+
+                        <input type="button" value="Guardar vehículo" id="btnInsertarVehiculo">
+                    </form>
+                </article>
+
+                <article>
+                    <h1>Insertar intervenciones</h1>
+                    <form action="">
+                        <label for="id_vInsertar">Id vehículo:</label>
+                        <input type="text" id="id_vInsertar" name="id_vInsertar" required>
+                        <br>
+
+                        <label for="fecha">Fecha:</label>
+                        <input type="text" id="fecha" name="fecha" required>
+                        <br>
+
+                        <label for="descripcion">Descripción:</label>
+                        <input type="text" id="descripcion" name="descripcion" required>
+                        <br>
+
+                        <label for="precio">Precio:</label>
+                        <input type="text" id="precio" name="precio" required>
+                        <br>
+
+                        <input type="button" value="Guardar intervención" id="btnInsertarIntervencion">
+                    </form>
                 </article>
             </div>
         </section>
