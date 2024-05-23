@@ -4,6 +4,9 @@ var sesionIniciada = false;
 var isAdmin = false;
 
 function iniciar() {
+    habilitarBotonInicioSesion();
+    habilitarBotonRegistro();
+
     // Funciones para el carruel de fotos
     carrusel();
 
@@ -19,10 +22,6 @@ function iniciar() {
     // Cargar el token
     var token = recuperarTokenSesion();
     var DNI = recuperarDNISesion();
-
-    if($('#id_DNILogin').val() === '11111111A'){
-        $('#admin').show();
-    }
 
     // Comprobar si el token existe
     if (token && DNI) {
@@ -51,7 +50,10 @@ function iniciar() {
     document.getElementById('id_binicio').addEventListener('click', login);
 
     // Función para que se registre el usuario
-    document.getElementById('id_bregistro').addEventListener('click', register);
+    document.getElementById('id_bregistro').addEventListener('click', function () {
+        register();
+        $('#id_bregistro').prop('disabled', true);
+    });
 
     // Función para insertar vehiculos e intervenciones
     document.getElementById('btnInsertarVehiculo').addEventListener('click', insertVehiculos);
@@ -62,6 +64,7 @@ function iniciar() {
         logout();
         cambiarVista('index');
         window.location.hash = 'index';
+        $('#id_binicio').prop('disabled', true);
     });
 
     // Función para mostrar la ubicación del taller
@@ -73,12 +76,12 @@ function iniciar() {
         mostrarFechaActual();
     }
 
-    document.getElementById('id_binicio').addEventListener('click', function() {
+    document.getElementById('id_binicio').addEventListener('click', function () {
         sesionIniciada = true;
         habilitarBotonesReserva();
     });
 
-    document.getElementById('id_bcerrar').addEventListener('click', function() {
+    document.getElementById('id_bcerrar').addEventListener('click', function () {
         sesionIniciada = false;
         deshabilitarBotonesReserva();
     });
@@ -109,6 +112,31 @@ function iniciar() {
             })
         });
     }
+
+    $('#id_DNILogin, #id_passwordLogin').on('input', habilitarBotonInicioSesion);
+    $('#id_DNIRegister, #id_nombreRegister, #id_passwordRegister').on('input', habilitarBotonRegistro);
+}
+
+// Función para habilitar o deshabilitar el botón de inicio de sesión
+function habilitarBotonInicioSesion() {
+    var dni = $('#id_DNILogin').val().trim();
+    var password = $('#id_passwordLogin').val().trim();
+    if (dni !== '' && password !== '') {
+        $('#id_binicio').prop('disabled', false);
+    } else {
+        $('#id_binicio').prop('disabled', true);
+    }
+}
+
+function habilitarBotonRegistro() {
+    var dni = $('#id_DNIRegister').val().trim();
+    var nombre = $('#id_nombreRegister').val().trim();
+    var password = $('#id_passwordRegister').val().trim();
+    if (dni !== '' && nombre !== '' && password !== '') {
+        $('#id_bregistro').prop('disabled', false);
+    } else {
+        $('#id_bregistro').prop('disabled', true);
+    }
 }
 
 function rutaInicio() {
@@ -131,7 +159,7 @@ function cambiarVista(hash) {
 
     const navLinks = document.querySelectorAll('nav a');
     navLinks.forEach(link => {
-        if(link.getAttribute('href') === `#${hash}`) {
+        if (link.getAttribute('href') === `#${hash}`) {
             link.classList.add('seleccionado');
         } else {
             link.classList.remove('seleccionado');
@@ -201,8 +229,7 @@ function mostrarRegister(e) {
     document.getElementById('id_dregister').style.display = 'block';
     document.getElementById('id_dlogout').style.display = 'none';
     document.getElementById('intervenciones').style.display = 'none';
-    document.getElementById('vehiculos').style.display = 'none';
-    document.getElementById('mostrarCitas').style.display = 'none';
+
 }
 
 function mostrarUsuario(e) {
@@ -265,7 +292,7 @@ function mapa() {
 // Función para habilitar los botones de reserva y anulación al iniciar sesión
 function habilitarBotonesReserva() {
     var botonesReserva = document.querySelectorAll('.btnReserva');
-    botonesReserva.forEach(function(boton) {
+    botonesReserva.forEach(function (boton) {
         boton.disabled = false;
     });
 }
@@ -273,7 +300,7 @@ function habilitarBotonesReserva() {
 // Función para deshabilitar los botones de reserva y anulación al cerrar sesión
 function deshabilitarBotonesReserva() {
     var botonesReserva = document.querySelectorAll('.btnReserva');
-    botonesReserva.forEach(function(boton) {
+    botonesReserva.forEach(function (boton) {
         boton.disabled = true;
     });
 }
@@ -344,7 +371,7 @@ function diasEnMes(year, month) {
 function mostrarDetalleDia(year, month, day, DNI) {
     var fecha = year + '-' + month + '-' + day;
     var detalleDia = document.getElementById('detalleDia');
-    
+
     // Ocultar el detalle si ya está mostrando
     if (detalleDia.dataset.fecha === fecha && detalleDia.dataset.visible === 'true') {
         detalleDia.innerHTML = '';
@@ -391,7 +418,7 @@ function cambiarReserva(fecha, hora, DNI) {
         $.ajax({
             type: "POST",
             url: url,
-            data: {action: 'reservar', fecha: fecha, hora: hora + ':00:00', DNI: DNI},
+            data: { action: 'reservar', fecha: fecha, hora: hora + ':00:00', DNI: DNI },
             success: function (response) {
                 mostrarCitas();
             },
@@ -405,7 +432,7 @@ function cambiarReserva(fecha, hora, DNI) {
 function anularReserva(fecha, hora, DNI) {
     var DNI = recuperarDNISesion();
     var reserva = obtenerReservaDeLocalStorage(fecha, hora);
-    
+
     if (reserva && reserva.color === 'red' && reserva.DNI === DNI) {
         var tdId = fecha + '-' + hora;
         var tdColor = document.getElementById(tdId);
@@ -462,15 +489,15 @@ function recuperarColorDeLocalStorage(fecha, hora) {
 }
 
 // Función para el carrusel de fotos
-function carrusel(){
+function carrusel() {
     var banner = new Array("img/carrusel1.jpg", "img/carrusel2.jpg", "img/carrusel3.jpg", "img/carrusel4.jpg", "img/carrusel5.jpg");
     var cont = 0;
     var numImagenes = banner.length;
-    
-    function rotate(){
-        if(document.images){
+
+    function rotate() {
+        if (document.images) {
             cont++;
-            if(cont == numImagenes) cont = 0;
+            if (cont == numImagenes) cont = 0;
             document.getElementById("imgBanner").src = banner[cont];
         }
         window.setTimeout(rotate, 7000);
@@ -498,7 +525,7 @@ function register() {
         async: true,
         data: { action: 'register', DNI: DNI, nombre: nombre, password: password },
         success: function (respuesta) {
-            window.alert('Usuario ' + nombre + ' registrado de forma correcta');
+            window.alert('Te has registrado de forma correcta ' + nombre);
         },
         error: function () {
             window.alert("Se ha producido un error");
@@ -535,7 +562,7 @@ function login() {
                 //console.log('Sesión iniciada con nombre: ' + responseObject.nombre);
             }
 
-            if(DNI === '11111111A'){
+            if (DNI === '11111111A') {
                 $('#enlaceAdmin').show();
             }
         },
@@ -620,12 +647,12 @@ function mostrarVehiculos() {
 function mostrarCitas() {
     let DNI;
 
-    if(sesionIniciada == true){
+    if (sesionIniciada == true) {
         DNI = recuperarDNISesion();
     } else {
         DNI = $('#id_DNILogin').val();
     }
-    
+
     //console.log('DNI para mostrar citas:', DNI);
 
     $.ajax({
@@ -647,7 +674,7 @@ function mostrarCitas() {
     });
 }
 
-function insertVehiculos(){
+function insertVehiculos() {
     let DNI = $('#DNIInsertar').val();
     let matricula = $('#matricula').val();
     let marca = $('#marca').val();
@@ -678,13 +705,13 @@ function insertVehiculos(){
         success: function (response) {
             window.alert('Vehiculo guardado correctamente');
         },
-        error: function(){
+        error: function () {
             window.alert('error al insertar vehículo');
         }
     });
 }
 
-function insertIntervenciones(){
+function insertIntervenciones() {
     let id_v = $('#id_vInsertar').val();
     let fecha = $('#fecha').val();
     let descripcion = $('#descripcion').val();
@@ -710,7 +737,7 @@ function insertIntervenciones(){
         success: function (response) {
             window.alert('Intervención guardada correctamente');
         },
-        error: function(){
+        error: function () {
             window.alert('error al insertar intervencion');
         }
     });
