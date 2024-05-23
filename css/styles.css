@@ -391,7 +391,7 @@ textarea {
 
     .login {
         position: absolute;
-        top: 620%;
+        top: 740%;
         right: 70%;
         text-align: center;
     }
@@ -447,7 +447,7 @@ textarea {
     nav {
         padding: 1%;
         position: fixed;
-        top: calc(7% + 4em);
+        top: calc(6% + 4em);
     }
 
     section {
@@ -475,5 +475,52 @@ textarea {
         position: fixed;
         top: 2%;
         right: 2%;
+    }
+}
+
+@media screen and (max-width: 1100px){
+    nav {
+        padding: 1%;
+        position: fixed;
+        top: calc(4% + 4em);
+    }
+}
+
+@media screen and (max-width: 425px){
+    .login {
+        position: absolute;
+        top: 780%;
+        right: 70%;
+        text-align: center;
+    }
+
+    #id_dregister{
+        position: fixed;
+        top: 45%;
+        right: 13%;
+        background-color: rgba(255, 255, 255, 0.7);
+        color: black;
+        padding: 5%;
+    }
+
+    #id_dlogin {
+        position: fixed;
+        top: 45%;
+        right: 13%;
+        background-color: rgba(255, 255, 255, 0.7);
+        color: black;
+        padding: 5%;
+    }
+
+    #id_dlogout{
+        position: fixed;
+        top: 94%;
+        right: 86%;
+    }
+
+    #id_dlogout button{
+        position: fixed;
+        top: 87%;
+        right: 80%;
     }
 }
