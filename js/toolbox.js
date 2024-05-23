@@ -46,6 +46,10 @@ function iniciar() {
     // Función para que se registre el usuario
     document.getElementById('id_bregistro').addEventListener('click', register);
 
+    // Función para insertar vehiculos e intervenciones
+    document.getElementById('btnInsertarVehiculo').addEventListener('click', insertVehiculos);
+    document.getElementById('btnInsertarIntervencion').addEventListener('click', insertIntervenciones);
+
     // Función para cerrar sesión
     document.getElementById('id_bcerrar').addEventListener('click', function () {
         logout();
@@ -626,6 +630,68 @@ function mostrarCitas() {
                 //console.log(cita);
                 tablaCitas.append("<tr><td>" + cita.fecha + "</td><td>" + cita.hora + "</td></tr>");
             });
+        }
+    });
+}
+
+function insertVehiculos(){
+    let DNI = $('#DNIInsertar').val();
+    let matricula = $('#matricula').val();
+    let marca = $('#marca').val();
+    let kilometros = $('#kilometros').val();
+    let anio = $('#anio').val();
+    let modelo = $('#modelo').val();
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        async: true,
+        data: {
+            action: 'insertVehiculos',
+            DNI: DNI,
+            matricula: matricula,
+            marca: marca,
+            kilometros: kilometros,
+            anio: anio,
+            modelo: modelo
+        },
+        success: function (response) {
+            console.log(response);
+        },
+        error: function(){
+            window.alert('error al insertar vehículo');
+        }
+    });
+}
+
+function insertIntervenciones(){
+    let id_v = $('#id_vInsertar').val();
+    let fecha = $('#fecha').val();
+    let descripcion = $('#descripcion').val();
+    let precio = $('#precio').val();
+
+    console.log(id_v);
+    console.log(fecha);
+    console.log(descripcion);
+    console.log(precio);
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        async: true,
+        data: {
+            action: 'insertIntervenciones',
+            id_v: id_v,
+            fecha: fecha,
+            descripcion: descripcion,
+            precio: precio
+        },
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+        },
+        error: function(){
+            window.alert('error al insertar intervencion');
         }
     });
 }

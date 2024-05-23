@@ -69,6 +69,24 @@
             $data = $crud->anular($DNI, $fecha, $hora);
             print_r($data);
             break;
+        case 'insertVehiculos':
+            $DNI = $_POST['DNI'];
+            $matricula = $_POST['matricula'];
+            $marca = $_POST['marca'];
+            $kilometros = $_POST['kilometros'];
+            $anio = $_POST['anio'];
+            $modelo = $_POST['modelo'];
+            $data = $crud->insertVehiculos($DNI, $matricula, $marca, $kilometros, $anio, $modelo);
+            echo $data;
+            break;
+        case 'insertIntervenciones':
+            $id_v = $_POST['id_v'];
+            $fecha = $_POST['fecha'];
+            $descripcion = $_POST['descripcion'];
+            $precio = $_POST['precio'];
+            $data = $crud->insertIntervenciones($id_v, $fecha, $descripcion, $precio);
+            echo $data;
+            break;
     }
 
     class db {
@@ -230,6 +248,66 @@
             $devolver = $pdo->fetchAll(PDO::FETCH_ASSOC);
             return json_encode($devolver);
         }
+
+        public function insertVehiculos($DNI, $matricula, $marca, $kilometros, $anio, $modelo) {
+            try {
+                // Verifica si el DNI existe en la tabla de usuarios/clientes
+                $queryCheckDNI = $this->db_handler->prepare("SELECT COUNT(*) FROM clientes WHERE DNI = :DNI");
+                $queryCheckDNI->execute(array(':DNI' => $DNI));
+                $dniExists = $queryCheckDNI->fetchColumn();
+        
+                if ($dniExists) {
+                    // Si el DNI existe, inserta el vehículo
+                    $queryInsertVehiculo = $this->db_handler->prepare("INSERT INTO vehiculos (DNI, matricula, marca, kilometros, anio, modelo) VALUES (:DNI, :matricula, :marca, :kilometros, :anio, :modelo)");
+                    $parametros = array(
+                        ':DNI' => $DNI,
+                        ':matricula' => $matricula,
+                        ':marca' => $marca,
+                        ':kilometros' => $kilometros,
+                        ':anio' => $anio,
+                        ':modelo' => $modelo
+                    );
+                    $queryInsertVehiculo->execute($parametros);
+                    return $queryInsertVehiculo->rowCount();
+                } else {
+                    // Si el DNI no existe, retorna un error o falso
+                    echo "El DNI no existe.";
+                    return false;
+                }
+            } catch (PDOException $e) {
+                echo "Error al insertar: " . $e->getMessage();
+                return false;
+            }
+        }
+
+        public function insertIntervenciones($id_v, $fecha, $descripcion, $precio) {
+            try {
+                // Verifica si el ID del vehículo existe en la tabla de vehículos
+                $queryCheckVehiculoID = $this->db_handler->prepare("SELECT COUNT(*) FROM vehiculos WHERE id_v = :id_v");
+                $queryCheckVehiculoID->execute(array(':id_v' => $id_v));
+                $vehiculoExists = $queryCheckVehiculoID->fetchColumn();
+        
+                if ($vehiculoExists) {
+                    // Si el ID del vehículo existe, inserta la intervención
+                    $queryInsertIntervencion = $this->db_handler->prepare("INSERT INTO intervencion (id_v, fecha, descripcion, precio) VALUES (:id_v, :fecha, :descripcion, :precio)");
+                    $parametros = array(
+                        ':id_v' => $id_v,
+                        ':descripcion' => $descripcion,
+                        ':fecha' => $fecha,
+                        ':precio' => $precio
+                    );
+                    $queryInsertIntervencion->execute($parametros);
+                    return $queryInsertIntervencion->rowCount();
+                } else {
+                    // Si el ID del vehículo no existe, retorna un error o falso
+                    echo "El ID del vehículo no existe.";
+                    return false;
+                }
+            } catch (PDOException $e) {
+                echo "Error al insertar: " . $e->getMessage();
+                return false;
+            }
+        }
     }
 
     // Conectar a la base de datos
@@ -241,7 +319,8 @@
     // print_r($db->login('70265782T', 'ivan'));
     // echo $db->login('gonza', 'gonza');
     // echo $db->logout();
-    // echo $db->insertVehiculo(1, '2291GVC', 'BMW', 'Serie 1', 180000, 2010);
+    // echo $db->insertVehiculos('11111111A', '1111AAA', 'BMW', 200000, 2010, 'Serie 5');
+    // echo $db->insertIntervenciones(4, '2024-04-30', 'Cambio de aceite', 145.00);
     // echo $db->deleteVehiculo(3);
     // print_r($db->mostrarClientes());
     // print_r($db->mostrarCitas('70265782T'));

@@ -50,6 +50,7 @@
         <a href="#informacion">Información</a>
         <a href="#intervenciones">Intervenciones</a>
         <a href="#citas">Citas</a>
+        <a href="#admin">Admin</a>
     </nav>
     <div class="contenedor">
         <section>
@@ -66,6 +67,62 @@
                         href="https://www.google.com/maps/place/Tool+Box/@40.9265351,-4.1118941,15z/data=!4m15!1m8!3m7!1s0xd413eff9241ed19:0xec3576f306c230b1!2sTool+Box!8m2!3d40.9266783!4d-4.11195!10e5!16s%2Fg%2F1tpbd8mg!3m5!1s0xd413eff9241ed19:0xec3576f306c230b1!8m2!3d40.9266783!4d-4.11195!16s%2Fg%2F1tpbd8mg?entry=ttu">Coordenadas</a>
                 </p>
             </aside>
+
+            <div id="index" style="display: none;" class="vista">
+                <article>
+                    <h1>Insertar vehiculo</h1>
+                    <form action="">
+                        <label for="DNIInsertar">DNI:</label>
+                        <input type="text" id="DNIInsertar" name="DNIInsertar">
+                        <br>
+
+                        <label for="matricula">Matricula:</label>
+                        <input type="text" id="matricula" name="matricula">
+                        <br>
+
+                        <label for="marca">Marca:</label>
+                        <input type="text" id="marca" name="marca">
+                        <br>
+
+                        <label for="kilometros">Kilometros:</label>
+                        <input type="text" id="kilometros" name="kilometros">
+                        <br>
+
+                        <label for="anio">Año: </label>
+                        <input type="text" id="anio" name="anio">
+                        <br>
+
+                        <label for="modelo">Modelo: </label>
+                        <input type="text" id="modelo" name="modelo">
+                        <br>
+
+                        <input type="button" value="Guardar vehículo" id="btnInsertarVehiculo">
+                    </form>
+                </article>
+
+                <article>
+                    <h1>Insertar intervenciones</h1>
+                    <form action="">
+                        <label for="id_vInsertar">Id vehículo:</label>
+                        <input type="text" id="id_vInsertar" name="id_vInsertar">
+                        <br>
+
+                        <label for="fecha">Fecha:</label>
+                        <input type="text" id="fecha" name="fecha">
+                        <br>
+
+                        <label for="descripcion">Descripción:</label>
+                        <input type="text" id="descripcion" name="descripcion">
+                        <br>
+
+                        <label for="precio">Precio:</label>
+                        <input type="text" id="precio" name="precio">
+                        <br>
+
+                        <input type="button" value="Guardar intervención" id="btnInsertarIntervencion">
+                    </form>
+                </article>
+            </div>
 
             <div id="index" class="vista">
                 <img src="img/fondo.jpg" id="imgBanner">
