@@ -50,6 +50,7 @@ function iniciar() {
     document.getElementById('id_bcerrar').addEventListener('click', function () {
         logout();
         cambiarVista('index');
+        window.location.hash = 'index';
     });
 
     // Función para mostrar la ubicación del taller
