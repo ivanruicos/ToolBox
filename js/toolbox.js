@@ -43,6 +43,8 @@ function iniciar() {
     // Función para mostrar datos del usuario
     document.getElementById("id_binicio").addEventListener('click', mostrarUsuario);
     document.getElementById("id_bcerrar").addEventListener('click', mostrarResgisterLogin);
+    document.getElementById("id_bvolver1").addEventListener('click', mostrarResgisterLogin);
+    document.getElementById("id_bvolver2").addEventListener('click', mostrarResgisterLogin);
     document.getElementById("id_bregistro").addEventListener('click', mostrarResgisterLogin);
 
     // función para imprimir nombre del usuario y que se inicie sesión
