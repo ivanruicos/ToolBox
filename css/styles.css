@@ -12,7 +12,7 @@ body {
 header {
     text-align: center;
     width: 100%;
-    background-color: #1b1b1b;
+    background: linear-gradient(135deg, rgba(28,28,28,1) 0%, rgba(46,46,46,1) 25%, rgba(28,28,28,1) 50%, rgba(56,56,56,1) 75%, rgba(28,28,28,1) 100%);
     color: #fff;
     padding: 2%;
     position: fixed;
@@ -23,7 +23,7 @@ header {
 
 header h1 {
     margin: 0;
-    color: rgba(255, 71, 71, 0.9);
+    color: rgba(255, 123, 0, 0.7);
     font-size: 4em;
     display: inline-block;
     text-align: center;
@@ -37,7 +37,7 @@ header h3 {
 
 nav {
     width: 100%;
-    background-color: #2b2b2b;
+    background: linear-gradient(135deg, rgba(28,28,28,1) 0%, rgba(46,46,46,1) 25%, rgba(28,28,28,1) 50%, rgba(56,56,56,1) 75%, rgba(28,28,28,1) 100%);
     color: #fff;
     padding: 1.2%;
     z-index: 1000;
@@ -70,7 +70,7 @@ article {
 
 aside {
     flex: 0 0 250px;
-    background-color: rgba(255, 71, 71, 0.7);
+    background-color: rgba(255, 123, 0, 0.7);
     color: #fff;
     padding: 1%;
     border-radius: 5px;
@@ -126,7 +126,7 @@ footer img {
 
 nav a {
     text-decoration: none;
-    color: rgba(255, 71, 71, 0.9);
+    color: rgba(255, 123, 0, 0.7);
     height: 100%;
     padding: 0.5%;
     font-weight: bold;
@@ -134,13 +134,13 @@ nav a {
 
 h1 a{
     text-decoration: none;
-    color: rgba(255, 71, 71, 0.9);
+    color: rgba(255, 123, 0, 0.7);
     height: 100%;
 }
 
 #informacion a{
     text-decoration: underline;
-    color: rgba(255, 71, 71, 0.9);
+    color: rgba(0, 0, 162, 0.7);
     height: 100%;
 }
 
@@ -343,7 +343,7 @@ textarea {
 }
 
 #intervenciones h1, #vehiculos h1, #citas h1, #mostrarCitas h1 {
-    color: rgba(255, 71, 71, 0.9);
+    color: rgba(0, 0, 162, 0.7);
     text-align: center;
 }
 
