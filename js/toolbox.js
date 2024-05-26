@@ -47,7 +47,12 @@ function iniciar() {
     document.getElementById("id_bregistro").addEventListener('click', mostrarResgisterLogin);
 
     // función para imprimir nombre del usuario y que se inicie sesión
-    document.getElementById('id_binicio').addEventListener('click', login);
+    document.getElementById('id_binicio').addEventListener('click', function () {
+        login();
+        mostrarIntervenciones();
+        mostrarVehiculos();
+        mostrarCitas();
+    });
 
     // Función para que se registre el usuario
     document.getElementById('id_bregistro').addEventListener('click', function () {
@@ -85,33 +90,6 @@ function iniciar() {
         sesionIniciada = false;
         deshabilitarBotonesReserva();
     });
-
-    // Función para mostrar intervenciones
-    if (document.getElementById('mostrarIntervenciones')) {
-        $('#id_DNILogin').on('keyup', function () {
-            $('#id_passwordLogin').on('keyup', function () {
-                mostrarIntervenciones();
-            })
-        });
-    }
-
-    // Función para mostrar vehículos
-    if (document.getElementById('mostrarVehiculos')) {
-        $('#id_DNILogin').on('keyup', function () {
-            $('#id_passwordLogin').on('keyup', function () {
-                mostrarVehiculos();
-            })
-        });
-    }
-
-    // Función para mostrar citas
-    if (document.getElementById('mostrarCitas')) {
-        $('#id_DNILogin').on('keyup', function () {
-            $('#id_passwordLogin').on('keyup', function () {
-                mostrarCitas();
-            })
-        });
-    }
 
     $('#id_DNILogin, #id_passwordLogin').on('input', habilitarBotonInicioSesion);
     $('#id_DNIRegister, #id_nombreRegister, #id_passwordRegister').on('input', habilitarBotonRegistro);
@@ -538,32 +516,45 @@ function login() {
     let DNI = $('#id_DNILogin').val();
     let password = $('#id_passwordLogin').val();
 
-    $('#id_DNILogin').val('');
-    $('#id_passwordLogin').val('');
-
     $.ajax({
         type: "post",
         url: url,
         async: true,
         data: { action: 'login', DNI: DNI, password: password },
         success: function (response) {
-            var responseObject = JSON.parse(response);
-            var nombreUsuario = responseObject.nombre;
-            $('#id_resultado').text(nombreUsuario);
+            try {
+                var responseObject = JSON.parse(response);
+                if (responseObject.message === 'success') {
+                    $('#id_DNILogin').val('');
+                    $('#id_passwordLogin').val('');
+                    $('#id_resultado').text('');
 
-            if (responseObject.token) {
-                almacenarTokenSesion(responseObject.token);
-                //console.log('Sesión iniciada con token: ' + responseObject.token);
-            }
+                    var nombreUsuario = responseObject.nombre;
+                    $('#id_resultado').text(nombreUsuario);
 
-            if (responseObject.nombre) {
-                almacenarNombreSesion(responseObject.nombre);
-                almacenarDNISesion(DNI);
-                //console.log('Sesión iniciada con nombre: ' + responseObject.nombre);
-            }
+                    if (responseObject.token) {
+                        almacenarTokenSesion(responseObject.token);
+                    }
 
-            if (DNI === '11111111A') {
-                $('#enlaceAdmin').show();
+                    if (responseObject.nombre) {
+                        almacenarNombreSesion(responseObject.nombre);
+                        almacenarDNISesion(DNI);
+                    }
+
+                    if (DNI === '11111111A') {
+                        $('#enlaceAdmin').show();
+                    }
+
+                    document.getElementById('id_dlogout').style.display = 'block';
+                    document.getElementById('id_dlogin').style.display = 'none';
+                } else {
+                    alert('DNI o contraseña incorrectos');
+                    document.getElementById('id_dlogout').style.display = 'none';
+                    document.getElementById('id_dlogin').style.display = 'block';
+                }
+            } catch (e) {
+                console.error("Error al procesar la respuesta: ", e);
+                alert('Error al procesar la respuesta del servidor');
             }
         },
         error: function () {

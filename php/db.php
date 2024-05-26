@@ -146,7 +146,7 @@
                     $_SESSION['dni'] = $DNI;
                     $token = bin2hex(random_bytes(16));
                     $_SESSION['token'] = $token;
-                    return json_encode(array('token' => $token, 'nombre' => $row['nombre']));
+                    return json_encode(array('token' => $token, 'nombre' => $row['nombre'], 'message' => 'success'));
                 } else {
                     return json_encode(array('error' => "Contraseña incorrecta"));
                 }
