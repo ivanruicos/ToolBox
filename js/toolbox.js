@@ -338,7 +338,7 @@ function mostrarCalendario() {
 
     var tablaCalendario = '<table class="tablaCalendario">';
 
-    tablaCalendario += '<tr><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th><th>Sábado</th><th>Domingo</th></tr>';
+    tablaCalendario += '<tr><th>L</th><th>M</th><th>X</th><th>J</th><th>V</th><th>S</th><th>D</th></tr>';
 
     var contadorDias = 1;
 

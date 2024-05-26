@@ -59,7 +59,7 @@ section {
 article {
     flex: 1 1 calc(40% - 20px);
     max-width: calc(40% - 20px);
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 2%;
     margin: 1%;
     border-radius: 5px;
@@ -225,8 +225,8 @@ p a {
 }
 
 .tablaCalendario {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .tablaCalendario th, .tablaCalendario td {
@@ -358,21 +358,15 @@ textarea {
     text-align: center;
     padding: 15px;
 }
-/*
-button:hover {
-    background-color: rgba(255, 123, 0, 0.7);
-    color: white;
-}
 
-input[type='submit']:hover{
-    background-color: rgba(255, 123, 0, 0.7);
-    color: white;
+#id_dregister, #id_dlogin{
+    background: linear-gradient(45deg, rgba(240,240,240,1) 0%, rgba(212,212,212,1) 25%, rgba(240,240,240,1) 50%, rgba(184,184,184,1) 75%, rgba(240,240,240,1) 100%);
+    padding: 1%;
+    color: rgba(0, 0, 162, 0.7);
+    position: absolute;
+    top: 10%;
+    right: 8%;
 }
-
-input[type='button']:hover{
-    background-color: rgba(255, 123, 0, 0.7);
-    color: white;
-}*/
 
 .inicio:hover {
     background-color: rgba(255, 123, 0, 0.7);
